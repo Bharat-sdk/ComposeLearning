@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.assignmentcompose1.ui.theme.AssignmentCompose1Theme
@@ -71,7 +72,7 @@ fun Screen( modifier: Modifier = Modifier) {
                   containerColor = Color.White,
                     contentColor = Color.Black,
               ),
-              border = BorderStroke(3.dp, color = Color.Blue)
+              border = BorderStroke(2.dp, color = Color.Blue)
               ) {
               Text(text = "Show Username")
           }
@@ -92,14 +93,31 @@ fun Screen( modifier: Modifier = Modifier) {
               containerColor = Color.White,
               contentColor = Color.Black,
           ),
-          border = BorderStroke(3.dp, color = Color.Blue)
+          border = BorderStroke(2.dp, color = Color.Blue)
       ) {
-          Text(text = "Show Username")
+          Text(text = "Show Password")
       }
 
       Row (modifier = Modifier.fillMaxWidth()){
           Text(text = "Your password is $showPassword", modifier = Modifier.padding(horizontal = 20.dp))
       }
+
+      Button(onClick = {
+          showPassword = password
+      },modifier = Modifier.padding(10.dp),
+          colors = ButtonDefaults.buttonColors(
+              containerColor = Color.White,
+              contentColor = Color.Black,
+          ),
+          border = BorderStroke(2.dp, color = Color.Blue)
+      ) {
+          Text(text = "Generate Password")
+      }
+
+      if (username.isNotBlank()&& password.isNotBlank()){
+          Text(text = "Hi $username, your \n password is $password", textAlign = TextAlign.Center)
+      }
+
   }
 }
 
@@ -112,6 +130,25 @@ fun GreetingPreview() {
 }
 
 @Composable
-fun EditTextButtonTextCombo(){
+fun EditTextButtonTextCombo(text:String,value:String,showValue:String){
+    TextField(value = value, onValueChange = {text->
+        value = text
+    }, label = {
+        Text(text = "Enter Your $text")
+    } )
+    Button(onClick = {
+        showValue = value
+    },modifier = Modifier.padding(10.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = Color.White,
+            contentColor = Color.Black,
+        ),
+        border = BorderStroke(2.dp, color = Color.Blue)
+    ) {
+        Text(text = "Show $text")
+    }
 
+    Row (modifier = Modifier.fillMaxWidth()){
+        Text(text = "Your $text is $showUsername", modifier = Modifier.padding(horizontal = 20.dp))
+    }
 }
